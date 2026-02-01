@@ -18,7 +18,7 @@ const backgroundStyle: ComputedRef<{ backgroundImage: string }> = computed(() =>
 }))
 </script>
 <template>
-  <div class="relative w-full overflow-hidden rounded-2xl bg-card-white max-w-sm aspect-769/1065">
+  <div class="relative items-center w-full overflow-hidden rounded-2xl bg-card-white max-w-96 aspect-769/1065">
     <div class="absolute -inset-1.25 bg-center bg-no-repeat bg-cover pointer-events-none" :style="backgroundStyle"
       aria-hidden="true" />
 

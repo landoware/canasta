@@ -10,7 +10,6 @@ const initialState = ref(true)
 const joiningGame = ref(false)
 
 const roomCode = ref('')
-const playerName = ref('')
 
 
 const error = ref(null)
@@ -65,10 +64,10 @@ function cancel() {
 
 <template>
   <div class="min-h-screen flex flex-col items-center justify-center text-center">
-    <p class="text-card-white font-quill text-[clamp(2.5rem,14vw,6rem)] leading-none text-shadow-lg mb-10">
+    <p class="text-card-white font-quill text-9xl leading-none text-shadow-lg mb-10">
       Canasta
     </p>
-    <FormCard>
+    <FormCard class="min-w-96">
       <div v-if="initialState" class="flex flex-col gap-5">
         <Button @click="createGame()" label="New Game" />
         <Button @click="joiningGame = true; initialState = false" label="Join Game" />

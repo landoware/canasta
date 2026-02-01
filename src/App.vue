@@ -1,9 +1,4 @@
 <script setup>
-import { onMounted } from 'vue'
-
-onMounted(() => {
-  // Connect to WebSocket when app loads
-})
 </script>
 
 <template>

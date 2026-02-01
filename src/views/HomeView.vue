@@ -7,21 +7,37 @@ import FormCard from '@/components/FormCard.vue'
 const router = useRouter()
 
 const initialState = ref(true)
-const creatingGame = ref(false)
 const joiningGame = ref(false)
 
 const roomCode = ref('')
 const playerName = ref('')
 
-onMounted(() => {
-})
 
-function createGame() {
-  if (!playerName.value) {
-    return
+const error = ref(null)
+
+const getCode = async () => {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_URL}/new`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    })
+
+    if (!response.ok) throw new Error("Failed to create game")
+
+    const data = await response.json()
+    return data.code
+  } catch (err) {
+    error.value = err
+    return null
   }
+}
 
-  pendingCreate.value = true
+async function createGame() {
+  console.log('Beats dealing, doesn\'t it?')
+  const code = await getCode()
+  if (code) {
+    router.push({ name: '', params: { code: code } })
+  }
 }
 
 function joinLobby() {
@@ -42,7 +58,6 @@ function joinLobby() {
 
 function cancel() {
   initialState.value = true
-  creatingGame.value = false
   joiningGame.value = false
 }
 
@@ -55,19 +70,9 @@ function cancel() {
     </p>
     <FormCard>
       <div v-if="initialState" class="flex flex-col gap-5">
-        <Button @click="creatingGame = true; initialState = false" label="New Game" />
+        <Button @click="createGame()" label="New Game" />
         <Button @click="joiningGame = true; initialState = false" label="Join Game" />
       </div>
-
-      <form v-if="creatingGame" @submit.prevent="createGame()">
-        <div class="flex flex-col gap-5">
-          <input v-if="!initialState" v-model.trim="playerName" type="text"
-            class="font-rs-bold text-black bg-white border border-card-blue rounded-md text-center" placeholder="Name">
-
-          <Button type="submit" label="New Game" />
-          <Button @click="cancel()" label="Back" class="bg-card-red" />
-        </div>
-      </form>
 
       <form v-if="joiningGame" @submit.prevent="joinLobby()">
         <div class="flex flex-col gap-5">

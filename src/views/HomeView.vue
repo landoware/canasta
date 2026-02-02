@@ -16,7 +16,8 @@ const error = ref(null)
 
 const getCode = async () => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_URL}/new`, {
+    console.log("Requesting to " + `${import.meta.env.VITE_SERVER_URL}/new`)
+    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/new`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     })
@@ -35,7 +36,7 @@ async function createGame() {
   console.log('Beats dealing, doesn\'t it?')
   const code = await getCode()
   if (code) {
-    router.push({ name: '', params: { code: code } })
+    router.push({ name: 'lobby', params: { id: code } })
   }
 }
 

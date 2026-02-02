@@ -19,7 +19,6 @@ const playerName = ref('')
 
 function setName() {
   if (playerName.value.length > 0) {
-    console.log(playerName.value)
     hasName.value = true
   }
 }
